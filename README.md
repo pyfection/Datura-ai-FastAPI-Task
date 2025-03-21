@@ -26,15 +26,18 @@ Here you can put in the `netuid` and `hotkey` of your choice and then click on `
 You should see a result that looks something similar to this:
 ```JSON
 {
-  "netuid": 2,
-  "hotkey": "abcd1234",
-  "dividends": {
+   "netuid": 2,
+   "hotkey": "abcd1234",
+   "dividends": {
     "2": {
       "abcd1234": 12345678
     }
-  },
-  "timestamp": "2025-03-21T14:18:35.519551"
+   },
+   "timestamp": "2025-03-21T14:18:35.519551",
+   "cached": true
 }
 ```
+If `cached` is true, then the dividend value was taken from the cache instead of the Bittensor blockchain.
+When values are fetched from there, they will be cached for 2 minutes.
 Please note that the `netuid` and `hotkey` parameters are optional. If you don't provide them,
 then it will return every `netuid` and `hotkey`.
