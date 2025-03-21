@@ -13,6 +13,9 @@ CHUTES_API_KEY = os.environ.get("CHUTES_API_KEY")
 
 
 def fetch_bittensor_netuid_tweets(netuid: int) -> list[dict]:
+    """Fetch Tweets about Bittensor with given netuid.
+    Note: this function may return different results every run, including nothing sometimes.
+    """
     url = "https://apis.datura.ai/twitter"
     headers = {"Authorization": DATURA_API_KEY, "Content-Type": "application/json"}
     today = date.today()
@@ -68,9 +71,23 @@ def fetch_chutes_sentiment(text: str) -> int:
     return int("".join(content))
 
 
+def get_twitter_sentiment(netuid: int) -> int | None:
+    """Return a sentiment by analyzing twitter posts on Bittensor.
+    May return None, if there are no recent tweets.
+    """
+    tweets = fetch_bittensor_netuid_tweets(netuid)
+    if not tweets:
+        return
+    tweet_texts = [tweet["text"] for tweet in tweets]
+    print("TWEET TEXTS: ", tweet_texts)
+    # print("TWEET TEXTS: ", "\n".join(tweet_texts))
+    return fetch_chutes_sentiment("\n".join(tweet_texts))
+
+
 if __name__ == "__main__":
     # tweets = fetch_bittensor_netuid_tweets(18)
     # for tweet in tweets:
     #     print(tweet["text"])
     #     break
-    print(fetch_chutes_sentiment("I'm OK today"))
+    # print(fetch_chutes_sentiment("I'm OK today"))
+    print(get_twitter_sentiment(18))
