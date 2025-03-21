@@ -5,7 +5,7 @@ from fastapi import FastAPI, Depends, Query, HTTPException, Security
 from fastapi.routing import APIRouter
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
-from api.utils import fetch_tao_dividends_per_subnet
+from api.utils import get_tao_dividends as get_tao_dividends_
 
 REQUIRED_TOKEN = os.getenv("API_AUTH_TOKEN")
 
@@ -35,12 +35,13 @@ async def get_tao_dividends(
     token: str = Depends(get_auth_token),
 ):
     """Protected endpoint that returns the Tao dividends data for a given subnet and hotkey."""
-    dividends = await fetch_tao_dividends_per_subnet(netuid, hotkey)
+    dividends, is_cached = await get_tao_dividends_(netuid, hotkey)
     return {
         "netuid": netuid,
         "hotkey": hotkey,
         "dividends": dividends,
         "timestamp": datetime.now().isoformat(),
+        "cached": is_cached,
     }
 
 
