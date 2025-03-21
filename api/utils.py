@@ -4,6 +4,20 @@ import os
 import bittensor as bt
 from bittensor.core.chain_data import decode_account_id
 
+from api.caching import cache
+
+
+async def get_tao_dividends(
+    netuid: int | None, hotkey: str | None
+) -> (dict[int, dict[str, int]], bool):
+    dividends = cache.get_tao_dividends(netuid, hotkey)
+    is_cached = True
+    if not dividends:
+        is_cached = False
+        dividends = await fetch_tao_dividends_per_subnet(netuid, hotkey)
+        cache.set_tao_dividends(netuid, hotkey, dividends)
+    return dividends, is_cached
+
 
 async def fetch_tao_dividends_per_subnet(
     netuid: int | None, hotkey: str | None
