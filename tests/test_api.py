@@ -24,12 +24,14 @@ def test_tao_dividends_valid_complete():
     assert "netuid" in data
     assert "hotkey" in data
     assert "dividends" in data
+    assert "cached" in data
     assert isinstance(data["dividends"], dict)
     assert len(data["dividends"]) == 1
     assert list(data["dividends"]) == [TEST_NETUID]
     assert len(data["dividends"][TEST_NETUID]) == 1
     assert list(data["dividends"][TEST_NETUID]) == [TEST_HOTKEY]
     assert isinstance(data["dividends"][TEST_NETUID][TEST_HOTKEY], int)
+    assert isinstance(data["cached"], bool)
 
 
 def test_tao_dividends_valid_netuid_missing():
