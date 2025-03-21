@@ -2,6 +2,8 @@ import json
 
 import redis
 
+from .tasks import delete_redis_key
+
 
 class Cacher(redis.Redis):
     tao_dividends_cache_key_format = "{netuid};{hotkey}"
@@ -28,6 +30,7 @@ class Cacher(redis.Redis):
         cache_key = self.tao_dividends_cache_key_format.format(
             netuid=netuid, hotkey=hotkey
         )
+        delete_redis_key.apply_async((cache_key,), countdown=2 * 60)
         return self.set_json(cache_key, dividends)
 
 

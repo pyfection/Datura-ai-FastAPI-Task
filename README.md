@@ -12,8 +12,9 @@ and optionally provides sentiment analysis on it.
 3. Run `pip install -r requirements.txt` (make sure you have Python >3.12 installed)
 4. Make a copy of the `example.env` file and simply call it `.env`
 5. Fill in the values. For the API_AUTH_TOKEN you can choose whatever value you want.
-6. Run `uvicord api.main:app --reload` or `python -m uvicorn api.main:app --reload`
-7. Go to http://127.0.0.0:8000/docs
+6. Run celery with `celery -A api.celery_config worker --loglevel=debug --pool=solo`
+7. Run `uvicord api.main:app --reload` or `python -m uvicorn api.main:app --reload`
+8. Go to http://127.0.0.0:8000/docs
 Now you are fully set up.
 
 ## Using the API
