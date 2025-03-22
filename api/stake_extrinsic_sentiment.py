@@ -71,7 +71,7 @@ def fetch_chutes_sentiment(text: str) -> int:
     return int("".join(content))
 
 
-def get_twitter_sentiment(netuid: int) -> int | None:
+def get_twitter_sentiment(netuid: int = 18) -> int | None:
     """Return a sentiment by analyzing twitter posts on Bittensor.
     May return None, if there are no recent tweets.
     """
