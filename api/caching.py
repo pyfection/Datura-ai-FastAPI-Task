@@ -1,8 +1,11 @@
 import json
+import os
 
 import redis
 
 from .tasks import delete_redis_key
+
+REDIS_HOST = os.environ.get("REDIS_HOST", "localhost")
 
 
 class Cacher(redis.Redis):
@@ -34,4 +37,4 @@ class Cacher(redis.Redis):
         return self.set_json(cache_key, dividends)
 
 
-cache = Cacher(host="localhost", port=6379, decode_responses=True)
+cache = Cacher(host=REDIS_HOST, port=6379, decode_responses=True)
