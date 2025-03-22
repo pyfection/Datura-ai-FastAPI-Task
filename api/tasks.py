@@ -1,3 +1,4 @@
+import asyncio
 import os
 
 import redis
@@ -6,6 +7,7 @@ from bittensor import Balance
 from bittensor_wallet import Wallet
 
 from api.celery_config import app
+from api.db import async_session, StakeAction
 
 BITTENSOR_WALLET_NETWORK = os.environ.get("BITTENSOR_WALLET_NETWORK")
 BITTENSOR_WALLET_NAME = os.environ.get("BITTENSOR_WALLET_NAME", "default")
@@ -19,7 +21,7 @@ def delete_redis_key(key):
 
 
 @app.task(name="tasks.update_stake_extrinsic")
-async def update_stake_extrinsic(sentiment: int, netuid: int, hotkey: str):
+def update_stake_extrinsic(sentiment: int, netuid: int, hotkey: str):
     subtensor = bt.Subtensor(network=BITTENSOR_WALLET_NETWORK)
     wallet = Wallet(
         name=BITTENSOR_WALLET_NAME,
@@ -30,5 +32,14 @@ async def update_stake_extrinsic(sentiment: int, netuid: int, hotkey: str):
     stake = Balance.from_tao(0.01 * sentiment, netuid)
     if sentiment > 0:
         subtensor.add_stake(wallet, hotkey_ss58=hotkey, netuid=netuid, amount=stake)
+        asyncio.run(log_stake_action(type="add_stake", hotkey=hotkey, rao=stake.rao))
     else:
         subtensor.unstake(wallet, hotkey_ss58=hotkey, netuid=netuid, amount=stake)
+        asyncio.run(log_stake_action(type="unstake", hotkey=hotkey, rao=stake.rao))
+
+
+async def log_stake_action(stake_type: str, hotkey: str, rao: int):
+    """Logs the stake action asynchronously."""
+    async with async_session() as session:
+        async with session.begin():
+            session.add(StakeAction(type=stake_type, hotkey=hotkey, rao=rao))
