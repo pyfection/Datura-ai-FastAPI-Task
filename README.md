@@ -1,4 +1,11 @@
 # Datura-ai-FastAPI-Task
+## Videos
+### Code Structure
+[Watch the video](https://github.com/pyfection/Datura-ai-FastAPI-Task/blob/main/datura_task_code.mp4)
+
+### Showcase
+[Watch the video](https://github.com/pyfection/Datura-ai-FastAPI-Task/blob/main/datura_task_showcase.mp4)
+
 ## Purpose
 This project was part of a coding test for Senior Python Backend Engineer position.
 It provides an API endpoint to get Tao dividends from the Bittensor blockchain
