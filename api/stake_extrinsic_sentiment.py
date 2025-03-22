@@ -79,8 +79,6 @@ def get_twitter_sentiment(netuid: int = 18) -> int | None:
     if not tweets:
         return
     tweet_texts = [tweet["text"] for tweet in tweets]
-    print("TWEET TEXTS: ", tweet_texts)
-    # print("TWEET TEXTS: ", "\n".join(tweet_texts))
     return fetch_chutes_sentiment("\n".join(tweet_texts))
 
 

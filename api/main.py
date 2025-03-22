@@ -1,17 +1,26 @@
 import os
+from contextlib import asynccontextmanager
 from datetime import datetime
 
 from fastapi import FastAPI, Depends, Query, HTTPException, Security
 from fastapi.routing import APIRouter
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
+from api import db
 from api.stake_extrinsic_sentiment import get_twitter_sentiment
 from api.tasks import update_stake_extrinsic
 from api.utils import get_tao_dividends as get_tao_dividends_
 
 REQUIRED_TOKEN = os.getenv("API_AUTH_TOKEN")
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await db.setup()
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 
 api_v1 = APIRouter(prefix="/api/v1", tags=["v1"])
 
