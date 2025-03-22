@@ -7,7 +7,7 @@ and optionally provides sentiment analysis on it.
 ## Setup
 1. Clone the repository to your local machine, to whatever path you like:
    - `cd /your/folder/here`
-   - `git clone .`
+   - `git clone https://github.com/pyfection/Datura-ai-FastAPI-Task.git`
 2. CD into the project directory, like `cd Datura-ai-FastAPI-Task`
 3. Make a copy of the `example.env` file and simply call it `.env`
 4. Fill in the values. For the API_AUTH_TOKEN you can choose whatever value you want.
@@ -43,3 +43,12 @@ If `cached` is true, then the dividend value was taken from the cache instead of
 When values are fetched from there, they will be cached for 2 minutes.
 Please note that the `netuid` and `hotkey` parameters are optional. If you don't provide them,
 then it will return every `netuid` and `hotkey`.
+
+## What I would do better
+I was only given 9 hours to do this project.
+If I was given more time I would:
+- Make stake_extrinsic_sentiment asynchronous
+- Add more tests
+- Better logging for Redis and Celery errors
+- API rate limit
+- Use PostgreSQL instead of SQLite
