@@ -9,10 +9,11 @@ from bittensor_wallet import Wallet
 from api.celery_config import app
 from api.db import async_session, StakeAction
 
+REDIS_HOST = os.environ.get("REDIS_HOST", "localhost")
 BITTENSOR_WALLET_NETWORK = os.environ.get("BITTENSOR_WALLET_NETWORK")
 BITTENSOR_WALLET_NAME = os.environ.get("BITTENSOR_WALLET_NAME", "default")
 BITTENSOR_WALLET_HOTKEY_NAME = os.environ.get("BITTENSOR_WALLET_HOTKEY_NAME", "default")
-redis_client = redis.Redis(host="localhost", port=6379, decode_responses=True)
+redis_client = redis.Redis(host=REDIS_HOST, port=6379, decode_responses=True)
 
 
 @app.task(name="tasks.delete_redis_key")

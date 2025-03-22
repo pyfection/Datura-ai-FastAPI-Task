@@ -7,13 +7,13 @@ and optionally provides sentiment analysis on it.
 ## Setup
 1. Clone the repository to your local machine, to whatever path you like:
    - `cd /your/folder/here`
-   - `git clone .`
+   - `git clone https://github.com/pyfection/Datura-ai-FastAPI-Task.git`
 2. CD into the project directory, like `cd Datura-ai-FastAPI-Task`
-3. Run `pip install -r requirements.txt` (make sure you have Python >3.12 installed)
-4. Make a copy of the `example.env` file and simply call it `.env`
-5. Fill in the values. For the API_AUTH_TOKEN you can choose whatever value you want.
-6. Run celery with `celery -A api.celery_config worker --loglevel=debug --pool=solo`
-7. Run `uvicord api.main:app --reload` or `python -m uvicorn api.main:app --reload`
+3. Make a copy of the `example.env` file and simply call it `.env`
+4. Fill in the values. For the API_AUTH_TOKEN you can choose whatever value you want.
+5. Build docker with `docker-compose build`
+6. Run docker with `docker-compose up`
+7. You can check if the containers are up and running with `docker-compose ps`
 8. Go to http://127.0.0.0:8000/docs
 Now you are fully set up.
 
@@ -43,3 +43,12 @@ If `cached` is true, then the dividend value was taken from the cache instead of
 When values are fetched from there, they will be cached for 2 minutes.
 Please note that the `netuid` and `hotkey` parameters are optional. If you don't provide them,
 then it will return every `netuid` and `hotkey`.
+
+## What I would do better
+I was only given 9 hours to do this project.
+If I was given more time I would:
+- Make stake_extrinsic_sentiment asynchronous
+- Add more tests
+- Better logging for Redis and Celery errors
+- API rate limit
+- Use PostgreSQL instead of SQLite
