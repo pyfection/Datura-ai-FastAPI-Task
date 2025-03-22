@@ -23,6 +23,7 @@ you should see an `Authorize` button and an endpoint `/api/v1/tao_dividends`.
 Click on the `Authorize` button and type in the auth token you set in your .env file and click "Authorize".
 Now click on the `tao_dividends` endpoint and click on `Try it out`.
 Here you can put in the `netuid` and `hotkey` of your choice and then click on `Execute`.
+If you choose to set `trade` to `True`, it will add a stake or unstake.
 You should see a result that looks something similar to this:
 ```JSON
 {
@@ -34,7 +35,8 @@ You should see a result that looks something similar to this:
     }
    },
    "timestamp": "2025-03-21T14:18:35.519551",
-   "cached": true
+   "cached": true,
+   "stake_tx_triggered": true
 }
 ```
 If `cached` is true, then the dividend value was taken from the cache instead of the Bittensor blockchain.
